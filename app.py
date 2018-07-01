@@ -13,6 +13,41 @@ def index():
 def charts():
     return render_template('charts.html')
 
+@app.route('/products')
+def products():
+    return render_template('view-all-products.html')
+
+@app.route('/add_product')
+def add_product():
+    return render_template('add-product.html')
+
+@app.route('/edit_product')
+def edit_product():
+    return render_template('edit-product.html')
+
+@app.route('/users')
+def users():
+    return render_template('view-all-users.html')
+
+@app.route('/add_user')
+def add_user():
+    return render_template('add-user.html')
+
+@app.route('/edit_user')
+def edit_user():
+    return render_template('edit-user.html')
+
+@app.route('/orders')
+def orders():
+    return render_template('view-all-orders.html')
+
+@app.route('/add_order')
+def add_order():
+    return render_template('add-order.html')
+
+@app.route('/edit_order')
+def edit_order():
+    return render_template('edit-order.html')
 # @app.route('/login_now')
 # def login_now():
 #   	return render_template('login.html')
