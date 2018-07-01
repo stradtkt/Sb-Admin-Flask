@@ -9,6 +9,44 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-hovered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Address</th>
+                                    <th>City, State, Zip</th>
+                                    <th class="edit-label">Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.first_name}}</td>
+                                    <td>{{user.last_name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.password}}</td>
+                                    <td>{{user.address}}</td>
+                                    <td>{{user.city}} {{user.state}} {{user.zip}}</td>
+                                    <td><a href="/edit_product" class="btn btn-warning pull-right">Edit</a></td>
+                                    <td>
+                                        <form action="/delete_user" method="POST">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
             </div>
         </div>

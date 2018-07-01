@@ -1,10 +1,10 @@
 from flask import Flask, request, redirect, render_template, session, flash, url_for
-# from mysqlconnection import MySQLConnector
-# import md5
+from mysqlconnection import MySQLConnector
+import md5
 
 app = Flask(__name__)
 app.secret_key = "dfdfdsfsd.sdf.fsdfg.g.tedg.dt.gdf.gfd.!"
-# mysql = MySQLConnector(app, 'login')
+mysql = MySQLConnector(app, 'store_2')
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -27,7 +27,9 @@ def edit_product():
 
 @app.route('/users')
 def users():
-    return render_template('view-all-users.html')
+    user_query = "SELECT * FROM users;"
+    users = mysql.query_db(user_query)
+    return render_template('view-all-users.html', users=users)
 
 @app.route('/add_user')
 def add_user():
@@ -88,35 +90,32 @@ def edit_order():
 #   	return "got registered"
 
 
-# @app.route('/login', methods=['POST'])
-# def login():
-#     email = request.form['email']
-#     password = request.form['password']
-#     valid = True
-#     if request.form['email'] == "":
-#         valid = False
-#         flash("Email cannot be empty", 'danger')
-#     if request.form['password'] == "":
-#         valid = False
-#         flash("Password cannot be empty", 'danger')
-#     if not valid:
-#         return redirect("/")
-#     else:
-#         query = "SELECT * FROM users WHERE email = :email AND password = :password"
-#         data = {
-#             "email":request.form['email'],
-#             "password": md5.new(request.form['password']).hexdigest()
-#         }
-#         user = mysql.query_db(query, data)
-#         if len(user) != 0:
-#             session['id'] = user[0]['id']
-#             session['name'] = user[0]['name']
-#             return redirect(url_for('dashboard'))
-#     return redirect('/')
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['email']
+    password = request.form['password']
+    valid = True
+    if request.form['email'] == "":
+        valid = False
+        flash("Email cannot be empty", 'danger')
+    if request.form['password'] == "":
+        valid = False
+        flash("Password cannot be empty", 'danger')
+    if not valid:
+        return redirect("/")
+    else:
+        query = "SELECT * FROM users WHERE email = :email AND password = :password"
+        data = {
+            "email":request.form['email'],
+            "password": md5.new(request.form['password']).hexdigest()
+        }
+        user = mysql.query_db(query, data)
+        if len(user) != 0:
+            session['id'] = user[0]['id']
+            session['first_name'] = user[0]['first_name']
+            return redirect(url_for('dashboard'))
+    return redirect('/')
 	
-# @app.route('/dashboard')
-# def dashboard():
-#   	return render_template('dashboard.html')
 
 
 app.run(debug=True)
