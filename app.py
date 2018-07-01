@@ -15,7 +15,9 @@ def charts():
 
 @app.route('/products')
 def products():
-    return render_template('view-all-products.html')
+    product_query = "SELECT products.id, products.name, products.image, products.description, products.price, products.category_id FROM products;"
+    products = mysql.query_db(product_query)
+    return render_template('view-all-products.html', products=products)
 
 @app.route('/add_product')
 def add_product():
@@ -50,9 +52,10 @@ def add_order():
 @app.route('/edit_order')
 def edit_order():
     return render_template('edit-order.html')
-# @app.route('/login_now')
-# def login_now():
-#   	return render_template('login.html')
+
+@app.route('/login_now')
+def login_now():
+  	return render_template('login.html')
 
 # @app.route('/register_now')
 # def register_now():
@@ -113,7 +116,7 @@ def login():
         if len(user) != 0:
             session['id'] = user[0]['id']
             session['first_name'] = user[0]['first_name']
-            return redirect(url_for('dashboard'))
+            return redirect('/')
     return redirect('/')
 	
 
