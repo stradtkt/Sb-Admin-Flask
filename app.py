@@ -55,6 +55,13 @@ def orders():
     orders = mysql.query_db(order_query)
     return render_template('view-all-orders.html', orders=orders)
 
+@app.route('/orders/delete/<id>', methods=['POST'])
+def delete_order(id):
+    delete = "DELETE FROM orders WHERE id = :the_id;"
+    data = {"the_id", id}
+    mysql.query_db(delete, data)
+    return render_template('')
+
 @app.route('/add_order')
 def add_order():
     return render_template('add-order.html')
@@ -66,6 +73,14 @@ def edit_order():
 @app.route('/login_now')
 def login_now():
   	return render_template('login.html')
+
+@app.route('/profile')
+def profile():
+    profile_query = "SELECT * FROM users WHERE id = :id;"
+    profile_data = {"id": session['id']}
+    profile = mysql.query_db(profile_query, profile_data)
+    return render_template('profile.html', profile=profile)
+    
 
 # @app.route('/register_now')
 # def register_now():
