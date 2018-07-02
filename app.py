@@ -5,9 +5,17 @@ import md5
 app = Flask(__name__)
 app.secret_key = "dfdfdsfsd.sdf.fsdfg.g.tedg.dt.gdf.gfd.!"
 mysql = MySQLConnector(app, 'store_2')
+
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    user_query = "SELECT * FROM users;"
+    users = mysql.query_db(user_query)
+    product_query = "SELECT * FROM products;"
+    products = mysql.query_db(product_query)
+    order_query = "SELECT * FROM orders;"
+    orders = mysql.query_db(order_query)
+    return render_template('index.html', users=users, products=products, orders=orders)
 
 @app.route('/charts')
 def charts():
@@ -43,7 +51,9 @@ def edit_user():
 
 @app.route('/orders')
 def orders():
-    return render_template('view-all-orders.html')
+    order_query = "SELECT orders.id, CONCAT(users.first_name, ' ', users.last_name) AS 'name', users.email, CONCAT(users.address, ' ', users.city, ' ', users.state, ' ', users.zip) AS shipping_address FROM orders JOIN users ON orders.id;"
+    orders = mysql.query_db(order_query)
+    return render_template('view-all-orders.html', orders=orders)
 
 @app.route('/add_order')
 def add_order():

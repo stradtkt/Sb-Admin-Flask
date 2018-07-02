@@ -15,13 +15,12 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
+                                    <th>First</th>
+                                    <th>Last</th>
                                     <th>Email</th>
                                     <th>Password</th>
                                     <th>Address</th>
-                                    <th>City, State, Zip</th>
-                                    <th class="edit-label">Edit</th>
+                                    <th>C, S, Z</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
@@ -35,7 +34,6 @@
                                     <td>{{user.password}}</td>
                                     <td>{{user.address}}</td>
                                     <td>{{user.city}} {{user.state}} {{user.zip}}</td>
-                                    <td><a href="/edit_product" class="btn btn-warning pull-right">Edit</a></td>
                                     <td>
                                         <form action="/delete_user" method="POST">
                                             <input type="submit" class="btn btn-danger" value="Delete">
